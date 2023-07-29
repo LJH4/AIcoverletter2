@@ -2,4 +2,3 @@ streamlit
 openai
 langchain
 docx
-trubrics.integrations.streamlit
