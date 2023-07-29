@@ -1,4 +1,4 @@
 streamlit
 openai
 langchain
-trubrics.integrations.streamlit
+trubrics
