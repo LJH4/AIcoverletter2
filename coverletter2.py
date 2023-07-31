@@ -45,8 +45,11 @@ prompt = PromptTemplate(
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
-  st.info(llm(finalPrompt))
+  x = st.info(llm(finalPrompt))
+  if x not in st.session_state:
+      st.session_state[x] = x    
   #st.write(finalPrompt)
+  st.write(x)
 
 
 
@@ -58,7 +61,7 @@ def generate_response(job_details, applicant_details):
 
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
-  applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
+  applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
   if submitted and openai_api_key.startswith('sk-'):
     generate_response(job_details, applicant_details)
@@ -72,6 +75,8 @@ collector = FeedbackCollector(
     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
 
+
+    
 if submitted:   
     st.write('How did the AI do?')
     collector.st_feedback(
