@@ -40,15 +40,17 @@ prompt = PromptTemplate(
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
+# Store session state to preserve LLM prompt results
+if 'llm_results' not in st.session_state:
+    st.session_state.llm_results = {}
 
 
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
-  x = st.info(llm(finalPrompt))
-  if x not in st.session_state:
-      st.session_state[x] = x    
-  #st.write(finalPrompt)
+  result = llm(finalPrompt)
+  st.session_state.llm_results[(job_details, applicant_details)] = result
+  st.info(result)
 
 
 
