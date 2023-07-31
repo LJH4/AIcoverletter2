@@ -49,7 +49,7 @@ def generate_response(job_details, applicant_details):
   if x not in st.session_state:
       st.session_state[x] = x    
   #st.write(finalPrompt)
-  st.write(x)
+  #st.write(x)
 
 
 
