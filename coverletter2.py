@@ -12,6 +12,9 @@ from trubrics.integrations.streamlit import FeedbackCollector
 
 #from docx import Document
 
+if "response" not in st.session_state:
+    st.session_state["response"] = ""
+
 st.set_page_config(page_title="Cover Letter Generator")
 st.title("Create Amazing Cover Letters")
 
@@ -40,10 +43,6 @@ prompt = PromptTemplate(
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
-# Store session state to preserve LLM prompt results
-if 'llm_results' not in st.session_state:
-    st.session_state.llm_results = {}
-
 
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
@@ -65,7 +64,9 @@ with st.form('my_form'):
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
   if submitted and openai_api_key.startswith('sk-'):
-    generate_response(job_details, applicant_details)
+    st.session_state["response"]=generate_response(job_details, applicant_details)
+  if st.session_state["response"]:
+    response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
 
@@ -84,4 +85,5 @@ if submitted:
         feedback_type="thumbs",
         model="your_model_name",
         open_feedback_label="Any additional feedback?",
+        metadata={"response": st.session_state["response"], "prompt": prompt},
     )    
