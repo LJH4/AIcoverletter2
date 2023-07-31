@@ -43,7 +43,6 @@ prompt = PromptTemplate(
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
-
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
@@ -53,7 +52,6 @@ def generate_response(job_details, applicant_details):
 # uploaded_file = st.file_uploader('Upload a job description', type='docx')
 # Query text
 #query_text = st.text_input('Enter your question:', placeholder = 'Please provide a short summary.', disabled=not uploaded_file)
-
 
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
@@ -65,15 +63,11 @@ with st.form('my_form'):
     response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
-
-
 collector = FeedbackCollector(
     component_name="evaluate_letter",
     email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
-
-
     
 if submitted:   
     st.write('How did the AI do?')
