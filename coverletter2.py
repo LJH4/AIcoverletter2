@@ -57,11 +57,14 @@ with st.form('my_form'):
   submitted = st.form_submit_button('Submit')
 
   if submitted and openai_api_key.startswith('sk-'):
-    st.session_state["response"]=generate_response(job_details, applicant_details)
+      response=generate_response(job_details, applicant_details)
+      response_text = response.choices[0].text.replace("\n", "")
+      st.session_state["response"]=response_text
+      #st.session_state["response"]=generate_response(job_details, applicant_details)
   
   if st.session_state["response"]:
-    #response_text = st.session_state["response"].choices[0].text
-    response_text = st.session_state["response"].choices[0].text.replace("\n", "")
+    response_text = st.session_state["response"]
+    #response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
 collector = FeedbackCollector(
