@@ -48,8 +48,11 @@ prompt = PromptTemplate(
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
+  response = llm(finalPrompt)
+  response_text = response.choices[0].text.replace("\n", "") if hasattr(response, 'choices') else ""
+  return response_text
   #st.info(llm(finalPrompt))
-  return llm(finalPrompt)
+  #return llm(finalPrompt)
 
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
@@ -57,13 +60,10 @@ with st.form('my_form'):
   submitted = st.form_submit_button('Submit')
 
   if submitted and openai_api_key.startswith('sk-'):
-      response=generate_response(job_details, applicant_details)
-      response_text = response.choices[0].text.replace("\n", "")
-      st.session_state["response"]=response_text
-      #st.session_state["response"]=generate_response(job_details, applicant_details)
+      st.session_state["response"]=generate_response(job_details, applicant_details)
   
   if st.session_state["response"]:
-    response_text = st.session_state["response"]
+    st.write(f"Response: {st.session_state['response']}")
     #response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
