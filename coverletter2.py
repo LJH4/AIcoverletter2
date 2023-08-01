@@ -18,7 +18,8 @@ if "response" not in st.session_state:
 st.set_page_config(page_title="Cover Letter Generator")
 st.title("Create Amazing Cover Letters")
 
-openai_api_key=st.secrets.openai_api_key
+#openai_api_key=st.secrets.openai_api_key
+openai_api_key=st.secrets["openai"]["openai_api_key"]
 
 template = """
 You are an expert in writing cover letters for job applicants.
@@ -46,27 +47,25 @@ prompt = PromptTemplate(
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
-  st.info(llm(finalPrompt)) 
-
-# File upload
-# uploaded_file = st.file_uploader('Upload a job description', type='docx')
-# Query text
-#query_text = st.text_input('Enter your question:', placeholder = 'Please provide a short summary.', disabled=not uploaded_file)
+  #st.info(llm(finalPrompt))
+  return llm(finalPrompt)
 
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
+
   if submitted and openai_api_key.startswith('sk-'):
     st.session_state["response"]=generate_response(job_details, applicant_details)
+  
   if st.session_state["response"]:
     response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
 collector = FeedbackCollector(
     component_name="evaluate_letter",
-    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
-    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+    email=st.secrets.TRUBRICS_EMAIL, # Store your Trubrics credentials in st.secrets:
+    password=st.secrets.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
     
 if submitted:   
