@@ -10,6 +10,7 @@ from langchain.llms import OpenAI
 from langchain import PromptTemplate
 from trubrics.integrations.streamlit import FeedbackCollector
 
+
 #from docx import Document
 
 if "response" not in st.session_state:
@@ -59,7 +60,8 @@ with st.form('my_form'):
     st.session_state["response"]=generate_response(job_details, applicant_details)
   
   if st.session_state["response"]:
-    response_text = st.session_state["response"].choices[0].text.replace("\n", "")
+    response_text = st.session_state["response"].choices[0].text
+    #response_text = st.session_state["response"].choices[0].text.replace("\n", "")
     
 
 collector = FeedbackCollector(
