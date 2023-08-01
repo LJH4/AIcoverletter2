@@ -66,8 +66,8 @@ with st.form('my_form'):
 
 collector = FeedbackCollector(
     component_name="evaluate_letter",
-    email=st.secrets.TRUBRICS_EMAIL, # Store your Trubrics credentials in st.secrets:
-    password=st.secrets.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
+    email=st.secrets.trubrics.TRUBRICS_EMAIL, # Store your Trubrics credentials in st.secrets:
+    password=st.secrets.trubrics.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
     
 if submitted:   
