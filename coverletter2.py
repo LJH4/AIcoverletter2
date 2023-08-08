@@ -71,7 +71,8 @@ with st.form('my_form'):
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
   if submitted and openai_api_key.startswith('sk-'):
-    generate_response(job_details, applicant_details)
+    response=generate_response(job_details, applicant_details)
+    st.write(response)
 
 
 collector = FeedbackCollector(
@@ -86,5 +87,5 @@ if submitted:
         feedback_type="thumbs",
         model="your_model_name",
         open_feedback_label="Any additional feedback?",
-        metadata={"response": st.session_state["response"], "prompt": prompt},
+        metadata={"response": response, "prompt": prompt},
     )    
