@@ -87,5 +87,5 @@ collector.st_feedback(
     feedback_type="thumbs",
     model="gpt4",
     open_feedback_label="Any additional feedback?",
-    metadata={"response": response, "prompt": prompt},
+    #metadata={"response": response, "prompt": prompt},
 )    
