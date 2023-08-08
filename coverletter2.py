@@ -50,8 +50,7 @@ prompt = PromptTemplate(
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
-
-
+prompt = 'hold for later'
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
@@ -81,11 +80,11 @@ collector = FeedbackCollector(
     password=st.secrets.trubrics.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
     
-if submitted:   
-    st.write('How did the AI do?')
-    collector.st_feedback(
-        feedback_type="thumbs",
-        model="your_model_name",
-        open_feedback_label="Any additional feedback?",
-        metadata={"response": response, "prompt": prompt},
-    )    
+#if submitted:   
+#    st.write('How did the AI do?')
+collector.st_feedback(
+    feedback_type="thumbs",
+    model="gpt4",
+    open_feedback_label="Any additional feedback?",
+    metadata={"response": response, "prompt": prompt},
+)    
