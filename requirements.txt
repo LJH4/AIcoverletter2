@@ -1,4 +1,4 @@
 streamlit
 openai
 langchain
-trubrics==1.4.4
+trubrics[streamlit]==1.4.4
