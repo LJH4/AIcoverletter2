@@ -11,8 +11,6 @@ from langchain import PromptTemplate
 from trubrics.integrations.streamlit import FeedbackCollector
 
 response = None
-job_details = None
-applicant_details = None
 
 st.set_page_config(page_title="Cover Letter Generator")
 st.title("Create Amazing Cover Letters")
@@ -45,21 +43,16 @@ Personalize with relevant experience and skills from the following description o
 
 """
 
-
-
 prompt = PromptTemplate(
     input_variables=["job_description", "applicant_description"],
     template=template
 )
 
 
-
-
 def generate_response(job_details, applicant_details):
   global response
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
-  st.info(llm(finalPrompt))
   response = llm(finalPrompt)
   st.info(response)
   #st.write(finalPrompt)
@@ -67,8 +60,6 @@ def generate_response(job_details, applicant_details):
 
 
 with st.form('my_form'):
-  global job_details
-  global applicant_details
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
