@@ -51,7 +51,7 @@ prompt = PromptTemplate(
 
 def generate_response(job_details, applicant_details):
   global response
-  llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
+  llm = OpenAI(model_name="gpt-3.5-turbo", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
   response = llm(finalPrompt)
   st.info(response)
