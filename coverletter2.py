@@ -53,11 +53,8 @@ def generate_response(job_details, applicant_details):
   global response
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
-  response = llm.complete(finalPrompt)
+  response = llm(finalPrompt)
   st.info(response)
-  #st.write(finalPrompt)
-
-
 
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
