@@ -47,13 +47,17 @@ prompt = PromptTemplate(
     template=template
 )
 
+response = None
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
 def generate_response(job_details, applicant_details):
+  response = Global  
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
   st.info(llm(finalPrompt))
+  response = llm(finalPrompt)
+  st.info(response)
   #st.write(finalPrompt)
 
 
@@ -83,5 +87,5 @@ collector.st_feedback(
     feedback_type="thumbs",
     model="gpt4",
     open_feedback_label="Any additional feedback?",
-    #metadata={"response": response, "prompt": prompt},
+    metadata={"response": response, "prompt": prompt}
 )    
