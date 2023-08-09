@@ -52,7 +52,7 @@ response = None
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
 def generate_response(job_details, applicant_details):
-  response = Global  
+  global response
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
   st.info(llm(finalPrompt))
