@@ -10,6 +10,9 @@ from langchain.llms import OpenAI
 from langchain import PromptTemplate
 from trubrics.integrations.streamlit import FeedbackCollector
 
+response = None
+job_details = None
+applicant_details = None
 
 st.set_page_config(page_title="Cover Letter Generator")
 st.title("Create Amazing Cover Letters")
@@ -42,14 +45,15 @@ Personalize with relevant experience and skills from the following description o
 
 """
 
+
+
 prompt = PromptTemplate(
     input_variables=["job_description", "applicant_description"],
     template=template
 )
 
-response = None
 
-#user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
+
 
 def generate_response(job_details, applicant_details):
   global response
@@ -62,13 +66,9 @@ def generate_response(job_details, applicant_details):
 
 
 
-# File upload
-# uploaded_file = st.file_uploader('Upload a job description', type='docx')
-# Query text
-#query_text = st.text_input('Enter your question:', placeholder = 'Please provide a short summary.', disabled=not uploaded_file)
-
-
 with st.form('my_form'):
+  global job_details
+  global applicant_details
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
@@ -87,5 +87,5 @@ collector.st_feedback(
     feedback_type="thumbs",
     model="gpt4",
     open_feedback_label="Any additional feedback?",
-    metadata={"response": response, "prompt": prompt}
+    metadata={"response":response, "job": job_details, "applicant": applicant_details}
 )    
