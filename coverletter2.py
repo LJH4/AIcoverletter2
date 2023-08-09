@@ -50,8 +50,6 @@ prompt = PromptTemplate(
 
 #user_email = st.sidebar.text_input('Provide your email to be first to receive updates and access to new tools:')
 
-prompt = 'prompt later'
-reaponse = 'response later'
 def generate_response(job_details, applicant_details):
   llm = OpenAI(model_name="gpt-4", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
@@ -72,8 +70,6 @@ with st.form('my_form'):
   submitted = st.form_submit_button('Submit')
   if submitted and openai_api_key.startswith('sk-'):
     generate_response(job_details, applicant_details)
-
-
 
 collector = FeedbackCollector(
     component_name="evaluate_letter",
