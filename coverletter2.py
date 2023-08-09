@@ -70,12 +70,11 @@ collector = FeedbackCollector(
     password=st.secrets.trubrics.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
     
-#if submitted:   
-#    st.write('How did the AI do?')
-collector.st_feedback(
-    feedback_type="thumbs",
-    model="gpt4",
-    open_feedback_label="Any additional feedback?",
-    metadata={"response":theresponse, "job": job_details, "applicant": applicant_details},
-    single_submit= False
-)    
+if submitted:   
+    collector.st_feedback(
+        feedback_type="thumbs",
+        model="gpt4",
+        open_feedback_label="Any additional feedback?",
+        metadata={"response":theresponse, "job": job_details, "applicant": applicant_details},
+        single_submit= False
+    )    
