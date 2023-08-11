@@ -70,13 +70,13 @@ with st.form('my_form'):
   if submitted and openai_api_key.startswith('sk-'):
     theresponse=generate_response(job_details, applicant_details)
     
-    collector.st_feedback(
-        feedback_type="thumbs",
-        model="gpt3.5turbo",
-        open_feedback_label="Any additional feedback?",
-        metadata={"response":theresponse, "job": job_details, "applicant": applicant_details},
-        single_submit= False
-    )    
+collector.st_feedback(
+    feedback_type="thumbs",
+    model="gpt3.5turbo",
+    open_feedback_label="Any additional feedback?",
+    metadata={"response":theresponse, "job": job_details, "applicant": applicant_details},
+    single_submit= False
+)    
 
 
        
