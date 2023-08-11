@@ -77,7 +77,7 @@ collector.st_feedback(
     model="gpt3.5turbo",
     open_feedback_label="Any additional feedback?",
     #metadata={"response": theresponse},
-    metadata={"job": job_details, "applicant": applicant_details},
+    metadata={"response": theresponse, "job": job_details, "applicant": applicant_details},
     single_submit= False,
 )    
 
