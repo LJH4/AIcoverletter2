@@ -10,7 +10,8 @@ from langchain.llms import OpenAI
 from langchain import PromptTemplate
 from trubrics.integrations.streamlit import FeedbackCollector
 
-response = None
+if "response" not in st.session_state:
+    st.session_state["response"] = None
 
 st.set_page_config(page_title="Cover Letter Generator")
 st.title("Create Amazing Cover Letters")
@@ -50,12 +51,10 @@ prompt = PromptTemplate(
 
 
 def generate_response(job_details, applicant_details):
-  global response
   llm = OpenAI(model_name="gpt-3.5-turbo", temperature=0.7, openai_api_key=openai_api_key)
   finalPrompt = prompt.format(job_description=job_details, applicant_description=applicant_details)
   response = llm(finalPrompt)
-  st.info(response)
-  return (response)
+  return response
 
 collector = FeedbackCollector(
     component_name="evaluate_letter",
@@ -63,22 +62,20 @@ collector = FeedbackCollector(
     password=st.secrets.trubrics.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
 
-theresponse="placeholder"
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
   submitted = st.form_submit_button('Submit')
-  if submitted and openai_api_key.startswith('sk-'):
-    theresponse=generate_response(job_details, applicant_details)
-    
-collector.st_feedback(
-    feedback_type="thumbs",
-    model="gpt3.5turbo",
-    open_feedback_label="Any additional feedback?",
-    #metadata={"response": theresponse},
-    metadata={"LLM response": theresponse, "job": job_details, "applicant": applicant_details},
-    single_submit= False,
-)    
 
+if submitted and openai_api_key.startswith('sk-'):
+    st.session_state["response"] = generate_response(job_details, applicant_details)
 
-       
+if st.session_state["response"]:
+    st.info(st.session_state["response"])
+    collector.st_feedback(
+        feedback_type="thumbs",
+        model="gpt3.5turbo",
+        open_feedback_label="Any additional feedback?",
+        metadata={"LLM response": st.session_state["response"], "job": job_details, "applicant": applicant_details},
+        single_submit=False,
+    )
