@@ -25,8 +25,8 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-openai_api_key=st.secrets["openai"]["openai_api_key"]
-
+#openai_api_key=st.secrets["openai"]["openai_api_key"]
+openai_api_key=st.secrets.openai.openai_api_key
 
 template = """
 You are an expert in writing cover letters for job applicants.
