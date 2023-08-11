@@ -63,6 +63,8 @@ collector = FeedbackCollector(
     password=st.secrets.trubrics.TRUBRICS_PASSWORD, # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
 
+theresponse=''
+#submitted = 'submit'
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
