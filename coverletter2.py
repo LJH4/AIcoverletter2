@@ -64,7 +64,6 @@ collector = FeedbackCollector(
 )
 
 theresponse="placeholder"
-#submitted = 'submit'
 with st.form('my_form'):
   job_details = st.text_area('Paste the job description here, or write a few sentences about the role.','Role CEO X.AI. Lead the team whose goal is to understand the true nature of the universe.  Report directly to Elon.')
   applicant_details = st.text_area('Paste your resume here, or write a few sentences about yourself.','Bodybuilder, Conan, Terminator and former governor of of California.  I killed the Predator.') 
@@ -77,7 +76,7 @@ collector.st_feedback(
     model="gpt3.5turbo",
     open_feedback_label="Any additional feedback?",
     #metadata={"response": theresponse},
-    metadata={"response": theresponse, "job": job_details, "applicant": applicant_details},
+    metadata={"LLM response": theresponse, "job": job_details, "applicant": applicant_details},
     single_submit= False,
 )    
 
