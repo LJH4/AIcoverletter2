@@ -76,6 +76,5 @@ if st.session_state["response"]:
         feedback_type="thumbs",
         model="gpt3.5turbo",
         open_feedback_label="Any additional feedback?",
-        metadata={"LLM response": st.session_state["response"], "job": job_details, "applicant": applicant_details},
         single_submit=False,
     )
